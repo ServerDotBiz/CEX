@@ -21,12 +21,8 @@ $last_price = $CEX->last_price('BTC/USD');
 var_dump($last_price);
 ```
 
-##Methods and examples
+##Public Methods and examples
 ```php
-/*
-*  Public functions, can be used without providing API credentials
-*/
-
 /**
 * symbols
 * Returns an array of available symbol pairs
@@ -101,12 +97,10 @@ var_dump($order_book);
 */
 $trade_history = $CEX->trade_history('BTC/USD', 135039);
 var_dump($trade_history);
+```
 
-
-/*
-*  Private functions, make sure to set your API crendentials to test these
-*/
-
+##Private Methods and examples (requires valid API credentials)
+```php
 /**
 * Balance
 * @return array $response_array
