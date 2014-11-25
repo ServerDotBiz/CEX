@@ -1,7 +1,7 @@
 CEX.io PHP API
 ===
 
-This is a PHP class that connects to the cex.io API
+This is a PHP class that connects to the cex.io API: https://cex.io/api
 
 ##Usage:
 1. Download the API source
@@ -183,6 +183,3 @@ var_dump($hashrate);
 $workers = $CEX->workers();
 var_dump($workers);
 ```
-
-##CEX documentation
-* Cex.io online API documentation: https://cex.io/api
