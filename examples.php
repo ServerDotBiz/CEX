@@ -1,25 +1,16 @@
-CEX.io PHP API
-===
-
-##Usage:
-1. Download the API source
-2. Generate your API key and API secret on https://cex.io/trade/profile
-3. include the CEX class
-```php
+<?php
+// Include CEX API class
 include_once("cex.class.php");
-```
-4. create a new CEX object, credentials are not needed for public methods
-```php
-$api_username	= false;	// your CEX username
-$api_key		= false;	// your API key
-$api_secret		= false;	// your API secret
+
+$api_username	= false;
+$api_key		= false;
+$api_secret		= false;
 $api_url		= 'https://cex.io/api';
 $api_cert		= 'cacert.pem';
-$CEX = new CEX($api_username, $api_key, $api_secret, $api_url, $api_cert);
-```
 
-##Methods and examples
-```php
+// Create CEX Object
+$CEX = new CEX($api_username, $api_key, $api_secret, $api_url, $api_cert);
+
 /*
 *  Public functions, can be used without providing API credentials
 */
@@ -181,7 +172,3 @@ var_dump($hashrate);
 */
 $workers = $CEX->workers();
 var_dump($workers);
-```
-
-##CEX documentation
-* Cex.io online API documentation: https://cex.io/api
