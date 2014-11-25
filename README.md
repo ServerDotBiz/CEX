@@ -1,6 +1,8 @@
 CEX.io PHP API
 ===
 
+This is a PHP class that connects to the cex.io API
+
 ##Usage:
 1. Download the API source
 2. Generate your API key and API secret on https://cex.io/trade/profile
