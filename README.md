@@ -22,6 +22,7 @@ var_dump($last_price);
 ```
 
 ##Public Methods and examples
+These calls don't require any API credentials
 ```php
 /**
 * symbols
@@ -99,7 +100,8 @@ $trade_history = $CEX->trade_history('BTC/USD', 135039);
 var_dump($trade_history);
 ```
 
-##Private Methods and examples (requires valid API credentials)
+##Private Methods and examples
+These calls require valid API credentials
 ```php
 /**
 * Balance
