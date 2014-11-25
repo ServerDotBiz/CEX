@@ -5,17 +5,20 @@ CEX.io PHP API
 1. Download the API source
 2. Generate your API key and API secret on https://cex.io/trade/profile
 3. include the CEX class
-```php
-include_once("cex.class.php");
-```
 4. create a new CEX object, credentials are not needed for public methods
 ```php
+include_once("cex.class.php");
+
 $api_username	= false;	// your CEX username
 $api_key		= false;	// your API key
 $api_secret		= false;	// your API secret
 $api_url		= 'https://cex.io/api';
 $api_cert		= 'cacert.pem';
+
 $CEX = new CEX($api_username, $api_key, $api_secret, $api_url, $api_cert);
+
+$last_price = $CEX->last_price('BTC/USD');
+var_dump($last_price);
 ```
 
 ##Methods and examples
