@@ -141,34 +141,41 @@ class CEX {
 	 * @param bool $private
 	 * @return array $response_array
 	 */
-	private function _callAPI($method, $path, $data, $private=false){
+	private function _callAPI($method, $path, $query_data, $private=false){
 		$ch = $this->_initCurl($this->_api_url.$path);
 
-		if ($method != 'GET'){
-			if ($private){
-				$this->_api_nonce = $this->_api_nonce+1;
+		if ($private){
+			$this->_api_nonce = $this->_api_nonce+1;
 
-				$authentication = array(
-					'key'=>$this->_api_key,
-					'signature'=>$this->_signature(),
-					'nonce'=>$this->_api_nonce,
-				);
+			$authentication = array(
+				'key'=>$this->_api_key,
+				'signature'=>$this->_signature(),
+				'nonce'=>$this->_api_nonce,
+			);
 
-				if ($data){
-					$query_data = array_merge($authentication, $data);
-				} else {
-					$query_data = $authentication;
-				}
+			if ($query_data){
+				$query_data = array_merge($authentication, $query_data);
+			} else {
+				$query_data = $authentication;
 			}
+		}
+		$query_built = http_build_query($query_data);
 
-			$post_query = http_build_query($query_data);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_query);
-
-			if ($method == 'POST') {
-				curl_setopt($ch, CURLOPT_POST, true);
-			} else if ($method == 'PUT') {
-				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+		if ($method == 'POST') {
+			if ($query_built){
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $query_built);
 			}
+			curl_setopt($ch, CURLOPT_POST, true);
+		} else if ($method == 'GET') {
+			if ($query_built){
+				curl_setopt($ch, CURLOPT_URL, $this->_api_url.$path.'/?'.$query_built);
+			}
+		} else if ($method == 'PUT') {
+			if ($query_built){
+				//TODO: set CURLOPT_INFILE & CURLOPT_INFILESIZE for PUT method
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $query_built);
+			}
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 		}
 
 		$response_data = curl_exec($ch);
@@ -318,7 +325,7 @@ class CEX {
 		}
 
 		if ($this->_check_symbol_pair($symbol_pair)){
-			$response_array = $this->_callAPI('POST', '/order_book/'.$symbol_pair, $data, false);
+			$response_array = $this->_callAPI('GET', '/order_book/'.$symbol_pair, $data, false);
 		} else {
 			$response_array = array('error'=>'please use a valid symbol pair');
 		}
@@ -343,7 +350,7 @@ class CEX {
 		);
 
 		if ($this->_check_symbol_pair($symbol_pair)){
-			$response_array = $this->_callAPI('POST', '/trade_history/'.$symbol_pair, $data, false);
+			$response_array = $this->_callAPI('GET', '/trade_history/'.$symbol_pair, $data, false);
 		} else {
 			$response_array = array('error'=>'please use a valid symbol pair');
 		}
